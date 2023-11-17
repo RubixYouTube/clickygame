@@ -1,2 +1,67 @@
-//The Code lol
-<p>hello world</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Click Counter</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="clicksTitle">Clicked <span id="clicksCount">0</span> times.</h1>
+    <button id="clickButton">Click</button>
+    <br>
+    <button id="saveButton">Save</button>
+    <button id="loadButton">Load</button>
+    <button id="downloadButton">Download Save</button>
+  </div>
+
+  <script>
+    // Get elements
+    const clickButton = document.getElementById("clickButton");
+    const clicksCount = document.getElementById("clicksCount");
+    const saveButton = document.getElementById("saveButton");
+    const loadButton = document.getElementById("loadButton");
+    const downloadButton = document.getElementById("downloadButton");
+    
+    // Initialize variable
+    let clicks = 0;
+    
+    // Event listeners
+    clickButton.addEventListener("click", () => {
+      clicks++;
+      clicksCount.textContent = clicks;
+    });
+
+    saveButton.addEventListener("click", () => {
+      localStorage.setItem("clicks", clicks);
+    });
+
+    loadButton.addEventListener("click", () => {
+      const savedClicks = localStorage.getItem("clicks");
+      if (savedClicks) {
+        clicks = parseInt(savedClicks);
+        clicksCount.textContent = clicks;
+      }
+    });
+
+    downloadButton.addEventListener("click", () => {
+      localStorage.setItem("clicks", clicks);
+      const savedClicks = localStorage.getItem("clicks");
+      const blob = new Blob([savedClicks], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "save.txt";
+      a.click();
+    });
+  </script>
+</body>
+</html>
