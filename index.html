@@ -7,20 +7,32 @@
       text-align: center;
       margin-top: 100px;
     }
-    button {
+    .button {
       padding: 10px 20px;
       margin: 10px;
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 id="clicksTitle">Clicked <span id="clicksCount">0</span> times.</h1>
-    <button id="clickButton">Click</button>
+    <h1 id="clicksTitle">You've Clicked <span id="clicksCount">0</span> Times.</h1>
+    <button id="clickButton" class="button">Click</button>
     <br>
-    <button id="saveButton">Save</button>
-    <button id="loadButton">Load</button>
-    <button id="downloadButton">Download Save</button>
+    <button id="saveButton" class="button">Save Progress</button>
+    <button id="loadButton" class="button">Load Progress</button>
+    <button id="downloadButton" class="button">Download Save</button>
   </div>
 
   <script>
