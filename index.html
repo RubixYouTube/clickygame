@@ -24,43 +24,53 @@
   </div>
 
   <script>
-    // Get elements
-    const clickButton = document.getElementById("clickButton");
-    const clicksCount = document.getElementById("clicksCount");
-    const saveButton = document.getElementById("saveButton");
-    const loadButton = document.getElementById("loadButton");
-    const downloadButton = document.getElementById("downloadButton");
-    
-    // Initialize variable
-    let clicks = 0;
-    
-    // Event listeners
-    clickButton.addEventListener("click", () => {
-      clicks++;
-      clicksCount.textContent = clicks;
-    });
+    document.addEventListener("DOMContentLoaded", () => {
+      const clickButton = document.getElementById("clickButton");
+      const clicksCount = document.getElementById("clicksCount");
+      const saveButton = document.getElementById("saveButton");
+      const loadButton = document.getElementById("loadButton");
+      const downloadButton = document.getElementById("downloadButton");
 
-    saveButton.addEventListener("click", () => {
-      localStorage.setItem("clicks", clicks);
-    });
+      let clicks = 0;
 
-    loadButton.addEventListener("click", () => {
-      const savedClicks = localStorage.getItem("clicks");
-      if (savedClicks) {
-        clicks = parseInt(savedClicks);
+      clickButton.addEventListener("click", () => {
+        clicks++;
         clicksCount.textContent = clicks;
-      }
-    });
+      });
 
-    downloadButton.addEventListener("click", () => {
-      localStorage.setItem("clicks", clicks);
-      const savedClicks = localStorage.getItem("clicks");
-      const blob = new Blob([savedClicks], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "save.txt";
-      a.click();
+      saveButton.addEventListener("click", () => {
+        try {
+          localStorage.setItem("clicks", clicks);
+        } catch (error) {
+          console.error("Error saving clicks:", error);
+        }
+      });
+
+      loadButton.addEventListener("click", () => {
+        try {
+          const savedClicks = localStorage.getItem("clicks");
+          if (savedClicks) {
+            clicks = parseInt(savedClicks);
+            clicksCount.textContent = clicks;
+          }
+        } catch (error) {
+          console.error("Error loading clicks:", error);
+        }
+      });
+
+      downloadButton.addEventListener("click", () => {
+        try {
+          localStorage.setItem("clicks", clicks);
+          const blob = new Blob([clicks], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "save.txt";
+          a.click();
+        } catch (error) {
+          console.error("Error downloading save:", error);
+        }
+      });
     });
   </script>
 </body>
